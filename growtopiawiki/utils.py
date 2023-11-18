@@ -14,18 +14,18 @@ def verify_path(path):
         os.makedirs(path)
 
 
-def output_to_json(items: list, itemwikis: list, **opts):
+def output_to_json(items: list, itemwikis: list, **kwargs):
     for item in items:
         for index, itemwiki in enumerate(itemwikis):
             if item["name"] == itemwiki["name"]:
                 item.update(itemwikis.pop(index))
-    output_path = opts.get("output", os.path.join(os.getcwd(), "output"))
+    output_path = kwargs.get("output", os.path.join(os.getcwd(), "output"))
     verify_path(output_path)
     with open(os.path.join(output_path, "items.json"), "w+") as file:
         json.dump(items, file, indent=4)
 
 
-async def itemsdat_to_dict(itemsdat: str = None, keep_bytearrays: bool = False):
+async def itemsdat_to_dict(itemsdat: str = None, bytearrays: bool = False):
     if not itemsdat:
         itemsdat = find_itemsdat()
     raw_items = await _parse_itemsdat(itemsdat)
@@ -34,7 +34,7 @@ async def itemsdat_to_dict(itemsdat: str = None, keep_bytearrays: bool = False):
         item_data = {}
         for key, value in vars(item).items():
             if isinstance(value, bytearray):
-                if keep_bytearrays:
+                if bytearrays:
                     item_data[key] = list(value)
             else:
                 item_data[key] = value
