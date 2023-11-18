@@ -8,7 +8,7 @@ with (HERE / "requirements.txt").open() as f:
 
 setup(
     name="growtopiawiki",
-    version="1.0",
+    version="1.1",
     description="parse growtopia wiki",
     packages=find_packages(),
     author="zeeetu",

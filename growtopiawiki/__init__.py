@@ -1,1 +1,1 @@
-from .wikiparser import WikiParser
+from .main import build_items

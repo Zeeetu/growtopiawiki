@@ -1,3 +1,3 @@
-growtopia.py
+growtopia.py @ git+https://github.com/kajob-dev/growtopia.py.git#
 mwparserfromhell
 aiohttp
