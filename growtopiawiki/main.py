@@ -1,5 +1,5 @@
-import asyncio
 from . import scraper, parser, utils
+import asyncio
 import json
 
 

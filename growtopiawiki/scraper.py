@@ -1,6 +1,6 @@
+from . import utils
 import aiohttp
 import asyncio
-from . import utils
 
 
 async def get_item_pages(item_names: list, split: int):

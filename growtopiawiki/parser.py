@@ -1,6 +1,6 @@
-from . import template
 import xml.etree.ElementTree as ET
 import mwparserfromhell as mwp
+from . import template
 import asyncio
 
 namespace = {"mw": "http://www.mediawiki.org/xml/export-0.11/"}
