@@ -52,11 +52,13 @@ recipe of door (dirt + cave background):
 ```json
 "recipe": {
       "splice": [
-        2, (itemid of dirt)
-        14 (itemid of cave background)
+        2,
+        14
       ]
     }
 ```
+
+where 2 is the itemid of dirt and 14 is the itemid of cave background
 
 ### combining example
 
@@ -66,9 +68,9 @@ recipe of slime (15x chem green + 2x chem pink + 4x chem blue), yields 4
 "recipe": {
       "combine": {
         "recipe": [
-          914, (itemid of green chemical)
-          15, (required amount of green chemical)
-          918, (etc..)
+          914,
+          15,
+          918,
           2,
           920,
           4
@@ -78,6 +80,7 @@ recipe of slime (15x chem green + 2x chem pink + 4x chem blue), yields 4
     }
 ```
 
+where 914 is the itemid of green chemical (first ingredient), and 15 is amount of green chemicals required (first ingredient), etc..
 if the recipe requires a certain combiner, the dictionary has the "combiner" key, which is the itemid of the required combiner.
 
 ## 🔎 how it works
