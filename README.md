@@ -89,7 +89,7 @@ first it uses [growtopia.py](https://github.com/kaJob-dev/growtopia.py) to parse
 
 the extracting method takes a list of pages as input and returns all requested pages in xml format
 
-the build_items() function takes split count as an argument, which will specify how many post requests to split the items into. default is 5, and generally anywhere between 5-20 should be good, not splitting may be pretty slow.
+the build_items() function takes split count as a keyword argument, which will specify how many post requests to split the items into. default is 5, and generally anywhere between 5-20 should be good, not splitting may be pretty slow.
 
 after that xml is parsed using [mwparserfromhell](https://github.com/earwig/mwparserfromhell), which is specifically used for parsing MediaWiki content, and output is saved into items.json file
 
