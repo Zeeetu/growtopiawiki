@@ -21,7 +21,7 @@ def output_to_json(items: list, itemwikis: list, **kwargs):
                 item.update(itemwikis.pop(index))
     output_path = kwargs.get("output", os.path.join(os.getcwd(), "output"))
     verify_path(output_path)
-    with open(os.path.join(output_path, "items.json"), "w+") as file:
+    with open(os.path.join(output_path, "items.json"), "w+", encoding="UTF-8") as file:
         json.dump(items, file, indent=4)
 
 
