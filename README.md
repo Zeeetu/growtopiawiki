@@ -31,7 +31,7 @@ from growtopiawiki import build_items
 build_items()
 ```
 
-on default it will look for items.dat from AppData/Local folder, but you can pass items.dat (or items.json, which will be overwritten) path to WikiParser if you want to specify a location
+on default it will look for items.dat from AppData/Local folder, but you can pass items.dat (or items.json, which will be overwritten) path to the function if you want to specify a location
 
 ```python
 build_items(items_dat = "path_to_items.dat")
