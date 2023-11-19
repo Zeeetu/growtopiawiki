@@ -7,7 +7,7 @@ namespace = {"mw": "http://www.mediawiki.org/xml/export-0.11/"}
 
 
 async def parse_item_page(item_name, item_page, ids_names):
-    item_data = {"name": item_name, "function": {}}
+    item_data = {"name": item_name, "function": {}, "recipe": {}}
     parsed_page = mwp.parse(item_page)
     templates = parsed_page.filter_templates()
     parser = template.TemplateParser(ids_names)
@@ -16,15 +16,20 @@ async def parse_item_page(item_name, item_page, ids_names):
             case "Item":
                 item_data["desc"], item_data["chi"] = await parser.item(t)
             case "RecipeSplice":
-                item_data["recipe_splice"] = await parser.splice(t)
+                item_data["recipe"]["splice"] = await parser.splice(t)
+            case "RecipeCombine":
+                item_data["recipe"]["combine"] = await parser.combine(t)
             case "Added":
                 item_data["function"]["add"] = await parser.func(t)
             case "Removed":
                 item_data["function"]["rem"] = await parser.func(t)
+            case "Pet":
+                item_data["pet"] = await parser.pet(t)
             case _:
-                pass
-    if item_data["function"] == {}:
-        del item_data["function"]
+                ...
+    empty_keys = [key for key in item_data.keys() if len(item_data[key]) == 0]
+    for key in empty_keys:
+        del item_data[key]
     return item_data
 
 
