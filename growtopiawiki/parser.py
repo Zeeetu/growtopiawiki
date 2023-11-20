@@ -27,7 +27,11 @@ async def parse_item_page(item_name, item_page, ids_names):
                 item_data["pet"] = await parser.pet(t)
             case _:
                 ...
-    empty_keys = [key for key in item_data.keys() if len(item_data[key]) == 0]
+    empty_keys = [
+        key
+        for key in item_data.keys()
+        if len(item_data[key]) == 0 or item_data[key] == "None"
+    ]
     for key in empty_keys:
         del item_data[key]
     return item_data

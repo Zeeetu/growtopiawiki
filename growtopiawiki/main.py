@@ -3,11 +3,14 @@ import asyncio
 import json
 
 
-def build_items(**kwargs):
+def build_items(**kwargs) -> list:
     """
     Build items.dat to a .json file.
     On default will look for items.dat in AppData/Local/Growtopia/cache
 
+    Returns
+    ----------------
+    Built dictionary
 
     Kwarg Parameters
     ----------------
@@ -22,7 +25,7 @@ def build_items(**kwargs):
     bytearrays: bool
         Whether or not to keep bytearrays in items.json file. (not recommended)
     """
-    asyncio.run(_build_items(**kwargs))
+    return asyncio.run(_build_items(**kwargs))
 
 
 async def _build_items(**kwargs):
@@ -37,4 +40,4 @@ async def _build_items(**kwargs):
     item_names = [item[1] for item in item_ids_and_names]
     raw_pages = await scraper.get_item_pages(item_names, kwargs.get("split", 5))
     item_dicts = await parser.xmls_to_item_dicts(raw_pages, item_ids_and_names)
-    utils.output_to_json(items, item_dicts, **kwargs)
+    return utils.output_to_json(items, item_dicts, **kwargs)

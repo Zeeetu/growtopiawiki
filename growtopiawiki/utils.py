@@ -22,7 +22,8 @@ def output_to_json(items: list, itemwikis: list, **kwargs):
     output_path = kwargs.get("output", os.path.join(os.getcwd(), "output"))
     verify_path(output_path)
     with open(os.path.join(output_path, "items.json"), "w+", encoding="UTF-8") as file:
-        json.dump(items, file, indent=4)
+        json.dump(items, file, indent=4, ensure_ascii=False)
+    return items
 
 
 async def itemsdat_to_dict(itemsdat: str = None, bytearrays: bool = False):
