@@ -1,11 +1,9 @@
 class TemplateParser:
-    def __init__(self, item_names_and_ids):
+    def __init__(self, item_names_and_ids: dict):
         self.names_and_ids = item_names_and_ids
 
     async def itemid_from_name(self, name):
-        for item in self.names_and_ids:
-            if item[1] == name:
-                return int(item[0])
+        return self.names_and_ids.get(str(name))
 
     async def item(self, t):
         description = str(t.get(1).value)

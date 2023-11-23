@@ -15,10 +15,8 @@ def verify_path(path):
 
 
 def output_to_json(items: list, itemwikis: list, **kwargs):
-    for item in items:
-        for index, itemwiki in enumerate(itemwikis):
-            if item["name"] == itemwiki["name"]:
-                item.update(itemwikis.pop(index))
+    itemwikis_dict = {itemwiki["name"]: itemwiki for itemwiki in itemwikis}
+    items = [{**item, **itemwikis_dict.get(item["name"], {})} for item in items]
     output_path = kwargs.get("output", os.path.join(os.getcwd(), "output"))
     verify_path(output_path)
     with open(os.path.join(output_path, "items.json"), "w+", encoding="UTF-8") as file:
@@ -59,5 +57,4 @@ def split_item_list(item_names: list, split_to: int):
         end_index = (i + 1) * sublist_size if i < split_to - 1 else None
         sublist = item_names[start_index:end_index]
         sublists.append(sublist)
-
     return sublists

@@ -1,6 +1,6 @@
 # 📜 growtopiawiki
 
-parse growtopia wiki and output to json
+parse growtopia wiki and output to json in seconds
 
 ## ⚙️ installation
 

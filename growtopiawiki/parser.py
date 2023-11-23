@@ -6,11 +6,10 @@ import asyncio
 namespace = {"mw": "http://www.mediawiki.org/xml/export-0.11/"}
 
 
-async def parse_item_page(item_name, item_page, ids_names):
+async def parse_item_page(item_name, item_page, parser):
     item_data = {"name": item_name, "function": {}, "recipe": {}}
     parsed_page = mwp.parse(item_page)
     templates = parsed_page.filter_templates()
-    parser = template.TemplateParser(ids_names)
     for t in templates:
         match t.name:
             case "Item":
@@ -27,17 +26,11 @@ async def parse_item_page(item_name, item_page, ids_names):
                 item_data["pet"] = await parser.pet(t)
             case _:
                 ...
-    empty_keys = [
-        key
-        for key in item_data.keys()
-        if len(item_data[key]) == 0 or item_data[key] == "None"
-    ]
-    for key in empty_keys:
-        del item_data[key]
+    item_data = {k: v for k, v in item_data.items() if len(v) != 0 and v != "None"}
     return item_data
 
 
-async def parse_xml_page(raw_page, item_ids_names):
+async def parse_xml_page(raw_page, parser):
     item_data_for_page = []
     tree = ET.fromstring(raw_page)
     pages = tree.iter("{" + namespace["mw"] + "}page")
@@ -45,7 +38,7 @@ async def parse_xml_page(raw_page, item_ids_names):
         parse_item_page(
             item_page.find(".//mw:title", namespace).text,
             item_page.find(".//mw:text", namespace).text,
-            item_ids_names,
+            parser,
         )
         for item_page in pages
     ]
@@ -53,9 +46,10 @@ async def parse_xml_page(raw_page, item_ids_names):
     return item_data_for_page
 
 
-async def xmls_to_item_dicts(raw_pages: list, item_ids_names: list):
+async def xmls_to_item_dicts(raw_pages: list, item_names_ids: dict):
     item_dicts = []
-    tasks = [parse_xml_page(raw_page, item_ids_names) for raw_page in raw_pages]
+    parser = template.TemplateParser(item_names_ids)
+    tasks = [parse_xml_page(raw_page, parser) for raw_page in raw_pages]
     results = await asyncio.gather(*tasks)
     for result in results:
         item_dicts.extend(result)

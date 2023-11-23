@@ -36,8 +36,8 @@ async def _build_items(**kwargs):
         items = await utils.itemsdat_to_dict(
             kwargs.get("items_dat"), kwargs.get("bytearrays", False)
         )
-    item_ids_and_names = [(item["id"], item["name"]) for item in items]
-    item_names = [item[1] for item in item_ids_and_names]
+    item_names_and_ids = {item["name"]: int(item["id"]) for item in items}
+    item_names = list(item_names_and_ids.keys())
     raw_pages = await scraper.get_item_pages(item_names, kwargs.get("split", 5))
-    item_dicts = await parser.xmls_to_item_dicts(raw_pages, item_ids_and_names)
+    item_dicts = await parser.xmls_to_item_dicts(raw_pages, item_names_and_ids)
     return utils.output_to_json(items, item_dicts, **kwargs)
